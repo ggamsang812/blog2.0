@@ -1,0 +1,51 @@
+---
+title: 'Python - Using OR, AND in an IF-statement'
+publishedAt: '2024-03-11'
+summary: 'Using OR, AND in an IF-statement in Python'
+---
+
+Came across this problem on LeetCode: <a href='https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/' target='_blank'>Maximum Number of Vowels in a Substring of Given Length</a>
+
+Wasn't a tough problem to solve. Only thing I had look up was how to use OR operator in an IF-statement.
+
+Basically, Python does behave like natural English, but this is one case where that abstraction fails and Python interpreter is more literal minded here.
+```py
+if name == "Kevin" or "Jon" or "Inbar":
+```
+is logically equivalent to:
+```py
+if (name == "Kevin") or ("Jon") or ("Inbar"):
+```
+Which, for user Bob, is equivalent to:
+```py
+if (False) or ("Jon") or ("Inbar"):
+```
+The or operator chooses the first operand that is "truthy", i.e. which would satisfy an if condition (or the last one, if none of them are "truthy"):
+```py
+if "Jon":
+```
+Since "Jon" is truthy, the if block executes. That is what causes "Access granted" to be printed regardless of the name given.
+More interesting article/explanation can be found below links.
+Two (Stack Overflow) posts I referred to are :
+1) <a href='https://stackoverflow.com/questions/20002503/why-does-a-x-or-y-or-z-always-evaluate-to-true-how-can-i-compare-a-to-al' target='_blank'>Why does "a == x or y or z" always evaluate to True? How can I compare "a" to all of those?</a>
+
+2) <a href='https://stackoverflow.com/questions/72764625/using-both-or-and-in-an-if-statement-python' target='_blank'>Using both OR, AND in an IF-statement - Python</a>
+
+My solution to above LeetCode problem in Python3 was:
+```py
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        substr = ""
+        total = 0        
+
+        for index in range(len(s) - k + 1) :
+            substr = s[index : index + k]
+            num = substr.count("a") + substr.count("e") + substr.count("i") + substr.count("o") + substr.count("u")
+            if total < num :
+                total = num 
+
+        return total
+```
+Runtime: 8465 ms
+
+Memory Usage: 17.4 MB (Beats 28.91%)

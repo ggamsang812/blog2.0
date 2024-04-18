@@ -1,0 +1,103 @@
+---
+title: 'Python - Mutability and Object References'
+publishedAt: '2024-03-17'
+summary: 'Mutability and Object References in Python'
+---
+
+This is a basic concept, but really easy to forget when I'm out in the field where I'm not required much of python coding. 
+
+The behavior observed here is not specific to the Python interpreter itself but rather a fundamental concept in programming languages, particularly in Python, known as mutability and object references.
+
+In Python, variables hold references to objects rather than the objects themselves. When I pass an object (like a dictionary) to a function, I'm passing its reference. This means that changes made to the object inside the function affect the same object outside the function if the object is mutable.
+Output of this code:
+
+```py
+def function1(i, saved_results=0):
+    if i < 1:            
+        if i == 0:
+            result = 22
+            saved_results = result # Save the value in the list
+            print(saved_results)
+
+    else: 
+        print(saved_results)
+
+# Test cases
+function1(0)
+function1(1)
+```
+
+will be:
+```ps
+22
+0
+```
+
+In function1, saved_results is initially assigned an immutable object, specifically an integer. When you do saved_results = result, you're changing the reference of saved_results to the integer result. Since integers are immutable, you're not modifying the original object; you're creating a new integer object and assigning it to saved_results.
+Output of this code:
+
+```py
+def function2(i, saved_results: dict[str, int]):
+    if i < 1:            
+        if i == 0:
+            question = "how old are you?"
+            result = 22
+            saved_results = {question: result} # Save the value in the list
+            print(saved_results)
+
+    else: 
+        print(saved_results)
+
+# Test cases
+saved_results = {}
+function2(0, saved_results)
+function2(1, saved_results)
+```
+will be:
+```ps
+{'how old are you?': 22}
+{}
+```
+In function2, saved_results is passed as a mutable object, specifically a dictionary. When you do saved_results = \{question: result\}, you're creating a new dictionary within the function scope and assigning it to saved_results. However, this assignment doesn't affect the dictionary that was passed into the function from the caller's scope. So, when you call function2 with saved_results initially being an empty dictionary, the dictionary inside the function gets updated, but the original dictionary remains unchanged.
+The alternative solution for both functions (not use global value) will be the following:
+
+```py
+def function1(i, saved_results=[0]):
+    if i < 1:            
+        if i == 0:
+            result = 22
+            saved_results[0] = result # Save the value in the list
+            print(saved_results[0])
+
+    else: 
+        print(saved_results[0])
+
+# Test cases
+function1(0)
+function1(1)
+
+def function2(i, saved_results: dict[str, int]):
+    if i < 1:            
+        if i == 0:
+            question = "how old are you?"
+            result = 22
+            saved_results[question] = result  # Update the dictionary
+            print(saved_results)
+    else: 
+        print(saved_results)
+
+# Test cases
+saved_results = {}
+function2(0, saved_results)
+function2(1, saved_results)
+```
+
+The output will now be: 
+```ps
+22
+22
+{'how old are you?': 22}
+{'how old are you?': 22}
+```
+
+I haven't used Python for awhile since my full-time job requires me to write more of React/TypeScript code than some Python code for AWS Lambda functions. When my colleague came to me for help with Python code that he wrote, it took me a couple of hours to figure this out. Might be basic concept, but easy to forget if not used. 
