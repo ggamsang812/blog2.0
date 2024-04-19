@@ -9,9 +9,9 @@ export default function Page() {
       <p className="mb-4">
         {'"We fix things and solve problems" - Engineering 101.'}
       </p>
-      <div className="my-8">
+      {/* <div className="my-8">
         <BlogPosts />
-      </div>
+      </div> */}
     </section>
   );
 }

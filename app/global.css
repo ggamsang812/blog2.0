@@ -33,6 +33,10 @@ html {
   min-width: 360px;
 }
 
+section {
+  width: 630px;
+}
+
 .prose .anchor {
   @apply absolute invisible no-underline;
 
