@@ -1,0 +1,56 @@
+---
+title: 'Order of Function Calls - Recommended Practice'
+publishedAt: '2024-04-20'
+summary: Too many things to think about
+---
+
+Here is something that got me today working on 
+<a href='https://github.com/ggamsang812/blog2.0' target='_blank'>blog2.0</a>.
+
+When the following code is executed, how will the itemsArray appear? Sorted or unsorted? 
+```js
+//post.tsx
+return (
+    <>
+      <testList allItems={itemsArray} />
+      <div>
+        {itemsArray.sort().map((post) => (
+          <div></div>
+        ))}
+      </div>
+    </>
+  );
+```
+ 
+```js
+//testList.tsx
+const mapItem = allItems.map((post) => (<div></div>))
+```
+Well, the answer can swing both ways. Here's why: The sequence of function calls in your code typically dictates 
+their execution order. Factors such as asynchronicity, complexity, optimizations, and data dependencies can all 
+influence the actual execution speed of each function. Consequently, it's vital to take these factors into account 
+when scrutinizing your code's behavior and determining the execution order for various operations.
+
+If the sort method is invoked first, in JavaScript, sort method will sorts the elements of the array in place and 
+returns a reference to the sorted array. This means that the original array is directly modified; it doesn't 
+generate a new array with the sorted elements. Consequently, any reference to the original array will now point to 
+the sorted version.
+
+However, if mapItem is called first, it will be mapped and sorted later.
+
+Unless you're keen on diving into logging and debugging, the recommended practice here would be to sort first in 
+the post.tsx if your intention is to ensure sorting occurs before any other operations.
+```
+//post.tsx
+const sorteditems = itemsArray.sort()
+return (
+    <>
+      <testList allItems={sorteditems} />
+      <div>
+        {sorteditems.map((post) => (
+          <div></div>
+        ))}
+      </div>
+    </>
+  );
+```
