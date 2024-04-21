@@ -8,13 +8,13 @@ Here is something that got me today working on
 <a href='https://github.com/ggamsang812/blog2.0' target='_blank'>blog2.0</a>.
 
 When the following code is executed, how will the itemsArray appear? Sorted or unsorted? 
-```js
-//post.tsx
+```jsx
+//item.tsx
 return (
     <>
       <testList allItems={itemsArray} />
       <div>
-        {itemsArray.sort().map((post) => (
+        {itemsArray.sort().map((item) => (
           <div></div>
         ))}
       </div>
@@ -24,7 +24,7 @@ return (
  
 ```js
 //testList.tsx
-const mapItem = allItems.map((post) => (<div></div>))
+const mapItem = allItems.map((item) => (<div></div>))
 ```
 Well, the answer can swing both ways. Here's why: The sequence of function calls in your code typically dictates 
 their execution order. Factors such as asynchronicity, complexity, optimizations, and data dependencies can all 
@@ -39,15 +39,15 @@ the sorted version.
 However, if mapItem is called first, it will be mapped and sorted later.
 
 Unless you're keen on diving into logging and debugging, the recommended practice here would be to sort first in 
-the post.tsx if your intention is to ensure sorting occurs before any other operations.
+the item.tsx if your intention is to ensure sorting occurs before any other operations.
 ```
-//post.tsx
+//item.tsx
 const sorteditems = itemsArray.sort()
 return (
     <>
       <testList allItems={sorteditems} />
       <div>
-        {sorteditems.map((post) => (
+        {sorteditems.map((item) => (
           <div></div>
         ))}
       </div>
