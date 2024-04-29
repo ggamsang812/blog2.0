@@ -1,0 +1,57 @@
+---
+title: 'Sentence Transformers - Locally Download and Use Pre-trained Model'
+publishedAt: '2024-04-28'
+summary: 'ChatGPT doesn't know this, but I do'
+---
+
+I found out my last post with guide to downloading and using pre-trained model is actually based on GitHub Issue from 2020.
+
+Here is the new way (4/28/2024):
+
+1) Decide which model you want to use:
+    - Based on Performance? Speed? Model Size? Suitable Score Functions?
+*Toggle "All Model" button to view from the all model* => 
+    <a href='https://www.sbert.net/docs/pretrained_models.html' target='_blank'> sbert.net</a> 
+    - Based on MTEB leaderboard? => <a href='https://huggingface.co/spaces/mteb/leaderboard' target='_blank'> Massive Text Embedding Benchmark Leaderboard</a>
+
+2) Whether you chose to go with sbert.net or MTEB Leaderboard, Click on the model name. 
+It should take you to the Huggingface Model card.
+*You do have to click through for sbert.net*
+    1) Fron the sbert.net link above, scroll down a little and you should see the list of models. Click on your choice of model.
+    I'll use the "paraphrase-MiniLM-L6-v2" model as an example : ![Alt text](/images/st-guide-new1.png)
+    
+    2) Once you click it, you should get a drop down expandable. Click the link by the Model card row.
+     ![Alt text](/images/st-guide-new2.png)
+
+    3) If you get to page that looks something like this, you're on the right track. ![Alt text](/images/st-guide-new3.png)
+
+3) On the right side of the page there is a vertical three dot icon (I don't know what they're called...)
+
+    1) *Click "Clone reposity"*![Alt text](/images/st-guide-new4.png)
+
+    2) *You will get a pop up. Follow the first two, but clone it inside your project* ![Alt text](/images/st-guide-new5.png)
+
+    3) *Result* ![Alt text](/images/st-guide-new7.png) 
+    
+        ![Alt text](/images/st-guide-new6.png)
+
+4) If you want to test, here is the code:
+```
+from sentence_transformers import SentenceTransformer
+model_path = r"C:\Users\Lennie\Desktop\LgihtHouse\Python\AI\paraphrase-MiniLM-L6-v2"
+model = SentenceTransformer(model_path)
+sentences = [
+    "This framework generates embeddings for each input sentence",
+    "Sentences are passed as a list of string.",
+    "The quick brown fox jumps over the lazy dog."
+]
+embeddings = model.encode(sentences)
+for sentence, embedding in zip(sentences, embeddings):
+    print("Sentence:", sentence)
+    print("Embedding:", embedding)
+    print("")
+```
+    1) It should look like this:
+    ![Alt text](/images/st-guide-new8.png)
+
+    2) Result: ![Alt text](/images/st-guide-new9.png)

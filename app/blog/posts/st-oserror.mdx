@@ -1,0 +1,53 @@
+---
+title: 'Sentence Transformers Troubleshooting (1) - OSError: [WinError 126]'
+publishedAt: '2024-04-27'
+summary: 'ChatGPT doesn't know the solution to this issue, but I do'
+---
+
+If your choice for embedding model is Sentence Transformers, then you might face a few error related to Sentence Transformers. 
+
+One error I faced was "OSError: [WinError 126] The specified module could not be found."
+
+There might be a long lines of error log but somewhere in the log you'll have this log:
+![Alt text](/images/st-torch-screenshot.png)
+```
+Traceback (most recent call last): 
+  File "PATH\AI\st_test.py", line 2, in <module>
+    import torch
+  File "PATH\Python\Python312\Lib\site-packages\torch\__init__.py", line 141, in <module>
+    raise err
+OSError: [WinError 126] The specified module could not be found. 
+Error loading "PATH\Python\Python312\Lib\site-packages\torch\lib\shm.dll" or one of its dependencies.
+```
+
+Two potential problems here:
+
+## 1. Running on Python 3.12?
+- Sentence Transformers requires PyTorch and PyTorch does not support python 3.12 yet and it only runs on python 3.11 (as of 4/27/2024).
+
+- You will need to download Python 3.11 and do either :
+    1. Reinstall Sentence Transformers. This will install the PyTorch for you again. 
+    2. Set up an virtual evironment with Python 3.11 version and then install Sentence Transformers in the virtual evironment.
+
+## 2. Try to Reinstall the PyTorch Seperatly
+- It might be a good idea to reinstall the PyTorch seperatly
+- Simply uninstall and reinstall the PyTorch.
+- Don't forget that installation commend differs depending on whether you want the PyTorch to run on CPU or GPU. 
+- I personally reinstalled the Sentence Transformers again after installing the PyTorch seperatly.
+
+### To install the PyTorch: 
+    1) (For GPU) run `nvcc --version` first to check CUDA version. If `nvcc : The term 'nvcc' is not recognized as the name of a cmdle` pops up,
+    you probably don't have GPU in the system and will need to install PyTorch for CPU. 
+    2) <a href='https://pytorch.org/' target='_blank'>Go to PyTorch WebSite</a>
+    3) Scroll down, find this selection part and select your build and system. It will tell you which command to run beside "Run this Command" 
+    
+        This was my case:
+     ![Alt text](/images/PyTorchInstallation.png)
+    4) If you want to check if the PyTorch has been installed or not. 
+
+        Run this Python script:
+    ```
+    import torch
+    print(torch.__version__)
+    ```     
+    5) You are all set, if you get a PyTorch version printed out.

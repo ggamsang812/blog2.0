@@ -1,0 +1,51 @@
+---
+title: 'Sentence Transformers Troubleshooting (2) - SSL Error '
+publishedAt: '2024-04-28'
+summary: 'ChatGPT doesn't know the solution to this issue, but I do'
+---
+
+Another error I had with Sentence Transformers was SSL Error when I try to download the pre-trained model. 
+
+I did not capture the screenshot of error or log to copy from, but there was GitHub Issue related to this error which 
+I also found the solution from: <a href='https://github.com/UKPLab/sentence-transformers/issues/571' target='_blank'>GitHub Issue</a>
+
+Downloading pre-trained model(s) from Sentence Transformers will require use of SSL and this SSL can cause an error depending on your SSL setting.
+
+Massing around with SSL / TLS options of your device will be one solution, but here is the second option: 
+
+## Download the model manually and put the model into the project
+***This is the old way. The GitHub Issue I linked was from 2020 and, off course, we have a newer way... 
+I decided to write another post on downloading the pre-trained model and putting it into the project mannually here:***
+
+***This method from 2020 still works though!***
+
+1) Go to this link: <a href='https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/' target='_blank'>Sentence Transformers Models</a>
+
+2) Download the model you want to use. *I'll use "all-MiniLM-L6-v2"*  
+
+3) Unzip the folder and move it to the project folder.
+
+4) Import the Sentence Transformers, assign model_path value to the path of the model folder. 
+
+    *You should be here at this point:*
+    ![Alt text](/images/st-guide-old1.png)
+
+5) Put below code to test embedding:
+```
+model = SentenceTransformer(model_path)
+sentences = [
+    "This framework generates embeddings for each input sentence",
+    "Sentences are passed as a list of string.",
+    "The quick brown fox jumps over the lazy dog."
+]
+embeddings = model.encode(sentences)
+for sentence, embedding in zip(sentences, embeddings):
+    print("Sentence:", sentence)
+    print("Embedding:", embedding)
+    print("")
+```
+The whole thing should look:
+![Alt text](/images/st-guide-old3.png)
+
+6) Run it. The result should look like this:
+![Alt text](/images/st-guide-old2.png)
