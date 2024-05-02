@@ -1,0 +1,37 @@
+---
+title: 'Similarity Search (1) - Overview '
+publishedAt: '2024-05-02'
+summary: 'How to Implement Similarity Search using Python, Amazon RDS for PostgreSQL and pgvector'
+---
+
+I'll now be writing about how to implement similarity search in python. I wanted to show an overview of 
+what I'm about to implement before I dive in.
+
+First, here is the architecture diagram of similarity search from user input to finding the most similar data: 
+![Alt text](/images/ss-architecture.jpg)
+
+Also, here are the articles and links that I used to implement:
+
+1) AWS Documentation on using pgvector on their Amazon RDS:
+
+    1) <a href='https://aws.amazon.com/about-aws/whats-new/2023/05/amazon-rds-postgresql-pgvector-ml-model-integration/?nc1=h_ls' target='_blank'>Amazon RDS for PostgreSQL now supports pgvector for simplified ML model integration</a>
+    2) <a href='https://aws.amazon.com/blogs/database/building-ai-powered-search-in-postgresql-using-amazon-sagemaker-and-pgvector/' target='_blank'>Building AI-powered search in PostgreSQL using Amazon SageMaker and pgvector</a>
+    3) <a href='https://aws.amazon.com/getting-started/hands-on/create-connect-postgresql-db/' target='_blank'>Create and Connect to a PostgreSQL Database with Amazon RDS</a>
+    4) <a href='https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Appendix.PostgreSQL.CommonDBATasks.Extensions.html' target='_blank'>Using PostgreSQL extensions with Amazon RDS for PostgreSQL</a>
+    
+2) I won't be using the content of this article, but it helped me understand the vector search: 
+<a href='https://tembo.io/blog/sentence-transformers' target='_blank'>Automate vector search in Postgres with any Hugging Face transformer</a>
+
+
+3) I'll be using different embedding model but most of the implementation will be very similar to this article: 
+<a href='https://www.timescale.com/blog/postgresql-as-a-vector-database-create-store-and-query-openai-embeddings-with-pgvector/' target='_blank'>PostgreSQL as a Vector Database: A pgvector Tutorial</a>
+
+For more information about the Sentence Transformers, check out my other posts:
+
+***I won't be setting Sentence Transformers model directly to the project for this similarity search guide. 
+However if you're facing SSL error or want to put model directly to the project, 
+first link below will do.***
+
+    1) <a href='https://theyuniverse.vercel.app/blog/st-model-locally' target='_blank'>How to set up embedding model locally / directly to the project</a>
+    3) <a href='https://theyuniverse.vercel.app/blog/st-oserror' target='_blank'>Troubleshooting (1) </a>
+    2) <a href='https://theyuniverse.vercel.app/blog/st-sslerror' target='_blank'>Troubleshooting (2) </a>
