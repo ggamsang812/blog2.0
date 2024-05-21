@@ -1,0 +1,72 @@
+---
+title: "Semantic Search (2) - Setting Up and Using Embedding Model"
+publishedAt: "2024-05-20"
+summary: "Took me 20 mins to find the place. Gotta love contructions in NY"
+---
+
+**0. Install Python 3.11**
+-
+   - Go here and install Python 3.11 : <a href='https://www.python.org/downloads/release/python-3110/' target='_blank'> Python 3.11.0</a>
+
+**1. Install SentenceTransformers: <a href='https://sbert.net/docs/installation.html' target='_blank'> Installation Guide</a>**
+-
+    - Set your vscode interpreter setting to python 3.11
+    ![Alt text](/images/semantic_search/ss2-3.png)
+   - Install with pip
+
+     `pip install -U sentence-transformers`
+
+   - Install with conda
+
+     `conda install -c conda-forge sentence-transformers`
+
+   - Install from source
+
+     `pip install -e . `
+
+    - To use GPA / CUDA : <a href='https://pytorch.org/get-started/locally/' target='_blank'>PyTorch - Get Started</a> 
+-------------------
+    ***Instead of switching interpreter setting on VSCode, you can also create/activate Virtual Environment by doing this instead:***
+    - Create Virtual Environment:
+
+        Navigate to your desired project directory in Command Prompt and create a virtual environment:
+        ```C:\Users\<YourUsername>\AppData\Local\Programs\Python\Python311\python.exe -m venv myenv```
+    - Activate the virtual environment to ensure you're using the correct Python version:
+        ```myenv\Scripts\activate```
+    - Once the virtual environment is activated, install the sentence-transformers package:
+        ```pip install -U sentence-transformers```
+-------------------
+
+
+**2. Choose the Pretrained Model: <a href='https://www.sbert.net/docs/pretrained_models.html' target='_blank'> sbert.net</a>**
+-
+    - I'll go with this model: <a href='https://huggingface.co/sentence-transformers/all-MiniLM-L12-v2' target='_blank'>all-MiniLM-L12-v2</a>
+    - You can search through the model, read through its description and choose your own model based on your need. 
+    Just remember to change the model name in the codebase.
+    
+**3. Put this code to test if it's working:**
+-
+```
+from sentence_transformers import SentenceTransformer, util
+model = SentenceTransformer("all-MiniLM-L12-v2")
+query_embedding = model.encode("How big is London")
+passage_embedding = model.encode([
+    "London has 9,787,426 inhabitants at the 2011 census",
+    "London is known for its finacial district",
+])
+print(query_embedding)
+print("Similarity:", util.cos_sim(query_embedding, passage_embedding))
+```
+***explanation of the code:
+First, loads / creates a SentenceTransformer model that can be used to map sentences / text to embeddings =>
+Encode / Convert the string value to vector value => Calculates the Cosine similarity***
+
+***I won't be using the cos_sim method from sentence_transformers later on. I'll be using pgvector***
+
+ ***All models are hosted on the HuggingFace Model Hub.***
+
+
+When you run it, it will first download the model to your system:
+    ![Alt text](/images/semantic_search/ss2-1.png)
+The output should look like this: 
+    ![Alt text](/images/semantic_search/ss2-2.png)
