@@ -1,5 +1,82 @@
 ---
-title: "Semantic Search (3) - PostgreSQL (AWS RDS vs. Firebase)"
+title: "Semantic Search (3) - PostgreSQL (AWS RDS vs. Supabase vs. Firebase)"
 publishedAt: "2024-05-21"
 summary: "Semantic Search Guide"
 ---
+
+**AWS RDS**
+-
+
+1. install pgadmin 4 - <a href='https://www.pgadmin.org/download/pgadmin-4-windows/' target='_blank'> pgAdmin 4 (Windows)</a>
+
+2. start RDS service 
+3. connect to RDS server from pgadmin 4
+4. Create table, column and rows
+5. insert data
+
+**Supabase**
+-
+1. Create Supabase account if you don't already have one
+2. Create a new project
+3. Enable pgvector 
+    - Database
+        ![Alt text](/images/semantic_search/ss3-1.png) 
+    - Extension => search *vector* => toggle enable
+        ![Alt text](/images/semantic_search/ss3-2.png) 
+4. Create a table and columns
+    ![Alt text](/images/semantic_search/ss3-3.png) 
+    ***Note:*** *I disabled Row Level Security (RLS) just for my convenience. You can enable RLS later on as well*
+
+    ***To Enable RLS:***
+    1. Go to *Table Editor*, select your table and Click on *Add RLS policy*
+    ![Alt text](/images/semantic_search/ss3-4.png) 
+    2. Click on *Create policy*
+    ![Alt text](/images/semantic_search/ss3-5.png) 
+    3. search *insert* to get two options for pre-made insert policy (or you can type your own).
+    ![Alt text](/images/semantic_search/ss3-6.png) 
+        1`)` This policy allows any authenticated user to perform insert operations on the vector_table.
+
+        2`)` You can use a service role key that has elevated privileges, bypassing RLS policies. 
+        Ensure you keep this key secure and only use it in server-side code.
+        
+        Replace your current key with the service role key:
+        ```
+        key: str = 'your-service-role-key'
+        ```
+
+5. Insert Data
+
+    Here is the Code: 
+    ```py
+    from sentence_transformers import SentenceTransformer
+    import numpy as np
+    from supabase import create_client, Client
+
+    url: str = "your-supabase-url"
+    key: str = "your-supabase-key"
+    supabase: Client = create_client(url, key)
+
+    model = SentenceTransformer("all-MiniLM-L12-v2")
+
+    query = "How big is London"
+
+    query_embedding = model.encode(query)
+    passage_embedding = model.encode([
+        "London has 9,787,426 inhabitants at the 2011 census",
+        "London is known for its finacial district",
+    ])
+
+    data, count = supabase.table('vector_table').insert({
+        "query": query, "vector": query_embedding.tolist()
+        }).execute()
+    ```
+    - Result: *id can be different*
+    ![Alt text](/images/semantic_search/ss3-7.png) 
+
+**Firebase**
+-
+*As an alernative option for Supabase, Google announced that Firebase now supports SQL at Google I/O on May 14, 2024.
+I don't know Firebase enough to compare it with AWS RDS and Supabase, so try Firebase at your own risk...*
+
+1. Create Firebase Project
+2. Do something with Data Connect...
