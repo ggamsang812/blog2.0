@@ -1,7 +1,7 @@
 ---
 title: "Semantic Search (2) - Setting Up and Using Embedding Model"
 publishedAt: "2024-05-20"
-summary: "Took me 20 mins to find the place. Gotta love contructions in NY"
+summary: "Semantic Search Guide"
 ---
 
 **0. Install Python 3.11**
@@ -61,7 +61,7 @@ print("Similarity:", util.cos_sim(query_embedding, passage_embedding))
 First, loads / creates a SentenceTransformer model that can be used to map sentences / text to embeddings =>
 Encode / Convert the string value to vector value => Calculates the Cosine similarity***
 
-***I won't be using the cos_sim method from sentence_transformers later on. I'll be using pgvector***
+***I'm using cos_sim just to test out sentence_transformers. I'll be using pgvector later on.***
 
  ***All models are hosted on the HuggingFace Model Hub.***
 
