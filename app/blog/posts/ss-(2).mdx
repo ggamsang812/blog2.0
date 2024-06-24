@@ -4,28 +4,31 @@ publishedAt: "2024-05-20"
 summary: "Semantic Search Guide"
 ---
 
-**0. Install Python 3.11**
--
-   - Go here and install Python 3.11 : <a href='https://www.python.org/downloads/release/python-3110/' target='_blank'> Python 3.11.0</a>
+## **0. Install Python 3.11**
 
-**1. Install SentenceTransformers: <a href='https://sbert.net/docs/installation.html' target='_blank'> Installation Guide</a>**
--
+- Go here and install Python 3.11 : <a href='https://www.python.org/downloads/release/python-3110/' target='_blank'> Python 3.11.0</a>
+
+## **1. Install SentenceTransformers: <a href='https://sbert.net/docs/installation.html' target='_blank'> Installation Guide</a>**
+
     - Set your vscode interpreter setting to python 3.11
     ![Alt text](/images/semantic_search/ss2-3.png)
-   - Install with pip
 
-     `pip install -U sentence-transformers`
+- Install with pip
 
-   - Install with conda
+  `pip install -U sentence-transformers`
 
-     `conda install -c conda-forge sentence-transformers`
+- Install with conda
 
-   - Install from source
+  `conda install -c conda-forge sentence-transformers`
 
-     `pip install -e . `
+- Install from source
 
-    - To use GPA / CUDA : <a href='https://pytorch.org/get-started/locally/' target='_blank'>PyTorch - Get Started</a> 
--------------------
+  `pip install -e . `
+
+- To use GPA / CUDA : <a href='https://pytorch.org/get-started/locally/' target='_blank'>PyTorch - Get Started</a>
+
+---
+
     ***Instead of switching interpreter setting on VSCode, you can also create/activate Virtual Environment by doing this instead:***
     - Create Virtual Environment:
 
@@ -35,17 +38,17 @@ summary: "Semantic Search Guide"
         ```myenv\Scripts\activate```
     - Once the virtual environment is activated, install the sentence-transformers package:
         ```pip install -U sentence-transformers```
--------------------
 
+---
 
-**2. Choose the Pretrained Model: <a href='https://www.sbert.net/docs/pretrained_models.html' target='_blank'> sbert.net</a>**
--
+## **2. Choose the Pretrained Model: <a href='https://www.sbert.net/docs/pretrained_models.html' target='_blank'> sbert.net</a>**
+
     - I'll go with this model: <a href='https://huggingface.co/sentence-transformers/all-MiniLM-L12-v2' target='_blank'>all-MiniLM-L12-v2</a>
-    - You can search through the model, read through its description and choose your own model based on your need. 
+    - You can search through the model, read through its description and choose your own model based on your need.
     Just remember to change the model name in the codebase.
-    
-**3. Put this code to test if it's working:**
--
+
+## **3. Put this code to test if it's working:**
+
 ```
 from sentence_transformers import SentenceTransformer, util
 model = SentenceTransformer("all-MiniLM-L12-v2")
@@ -57,16 +60,16 @@ passage_embedding = model.encode([
 print(query_embedding)
 print("Similarity:", util.cos_sim(query_embedding, passage_embedding))
 ```
-***explanation of the code:
+
+**_explanation of the code:
 First, loads / creates a SentenceTransformer model that can be used to map sentences / text to embeddings =>
-Encode / Convert the string value to vector value => Calculates the Cosine similarity***
+Encode / Convert the string value to vector value => Calculates the Cosine similarity_**
 
-***I'm using cos_sim just to test out sentence_transformers. I'll be using pgvector later on.***
+**_I'm using cos_sim just to test out sentence_transformers. I'll be using pgvector later on._**
 
- ***All models are hosted on the HuggingFace Model Hub.***
-
+**_All models are hosted on the HuggingFace Model Hub._**
 
 When you run it, it will first download the model to your system:
-    ![Alt text](/images/semantic_search/ss2-1.png)
-The output should look like this: 
-    ![Alt text](/images/semantic_search/ss2-2.png)
+![Alt text](/images/semantic_search/ss2-1.png)
+The output should look like this:
+![Alt text](/images/semantic_search/ss2-2.png)
