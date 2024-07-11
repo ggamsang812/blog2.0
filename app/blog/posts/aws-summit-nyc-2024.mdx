@@ -1,0 +1,27 @@
+---
+title: "AWS Summit NYC 2024 Recap"
+publishedAt: "2024-07-11"
+summary: "I should to go to those builder's sessions next time"
+---
+
+## Keynote:
+One standout moment for me was the discussion about eliminating hallucinations in AWS Bedrock, which I believe they called GuardRail. They acknowledge this is a significant issue. My question is: How do they determine if it's a hallucination or not?
+
+To identify a failure or hallucination, you need to define the boundaries of where the LLMs pull their data from to generate responses.
+
+Currently, to restrict the source or set the response boundary for Bedrock LLMs, you need to use Kendra. You set the index in Kendra to the source you want, and the LLM generates answers based on that specified content.
+
+They also introduced a slew of options and features for models in SageMaker and Bedrock. While these options provide more flexibility, it also seems like more ways to charge customers for features they may not fully understand. Many people and businesses add features without fully grasping their purpose or asking, "Do we actually need this feature?" just to claim they're using the latest technology.
+
+## Monitoring Amazon Bedrock Applications:
+Bedrock includes basic monitoring log groups in AWS CloudWatch for each LLM used. If you have multiple Lambda functions running models on Bedrock, you'll have log groups for each model, and you can log queries, generated text, and embeddings (if you're using an embedding model).
+
+To log anything beyond queries, text, and embeddings, you'll need to set up CloudTrail.
+
+This session was enlightening because I didn't know you get a default log group in CloudWatch when using Bedrock models. The demo on setting up CloudTrail for additional logging was also very useful.
+
+## Building Generative AI for Speed and Cost Efficiency:
+This session focused on how Druva can build Generative AI applications that are both time-efficient and cost-effective. I'm impressed by how they offer lower prices for building Gen AI compared to using AWS services directly, even though they use AWS services behind the scenes.
+
+***Annual photo of me in front of AWS***
+![Alt text](/images/aws-summit-2024.jpg)
