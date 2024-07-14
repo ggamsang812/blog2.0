@@ -1,0 +1,13 @@
+{
+    "rewrites": [
+      {
+        "source": "/github/:path*",
+        "destination": "https://github.com/:path*"
+      },
+      {
+        "source": "/leetcode/:path*",
+        "destination": "https://leetcode.com/graphql/:path*"
+      }
+    ]
+  }
+  
