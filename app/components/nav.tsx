@@ -1,16 +1,19 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 const navItems = {
-  '/': {
-    name: 'home',
+  "/": {
+    name: "home",
   },
-  '/blog': {
-    name: 'blog',
+  "/blog": {
+    name: "blog",
   },
-  'https://github.com/ggamsang812': {
-    name: 'github',
+  "/project": {
+    name: "project",
   },
-}
+  "https://github.com/ggamsang812": {
+    name: "github",
+  },
+};
 
 export function Navbar() {
   return (
@@ -21,19 +24,20 @@ export function Navbar() {
           id="nav"
         >
           <div className="flex flex-row space-x-0 pr-10">
-          {Object.entries(navItems).map(([path, { name }]) => {
+            {Object.entries(navItems).map(([path, { name }]) => {
               // If the path is a URL (e.g., GitHub link), render a regular anchor tag
-              if (path.startsWith('http')) {
+              if (path.startsWith("http")) {
                 return (
                   <a
                     key={path}
                     href={path}
-                    target="_blank" rel="noopener noreferrer"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
                   >
                     {name}
                   </a>
-                )
+                );
               } else {
                 // If it's a local link, render a Next.js Link component
                 return (
@@ -44,12 +48,12 @@ export function Navbar() {
                   >
                     {name}
                   </Link>
-                )
+                );
               }
             })}
           </div>
         </nav>
       </div>
     </aside>
-  )
+  );
 }
