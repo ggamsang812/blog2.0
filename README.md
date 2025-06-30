@@ -14,3 +14,6 @@ This porfolio site template includes:
 - Tailwind v4
 - Vercel Speed Insights / Web Analytics
 - Geist font
+
+## How run this local
+npm run dev
